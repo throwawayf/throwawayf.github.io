@@ -93,9 +93,9 @@ define(["exports", "rx", "react", "./components/Buttons", "./components/ThrowBut
       return count === rounds;
     });
 
-    endOfGame_.combineLatest(result_, function (_, result) {
-      if (result.player1 > result.player2) return "win";
-      if (result.player2 > result.player1) return "lose";
+    endOfGame_.combineLatest(score_, function (_, score) {
+      if (score.player1 > score.player2) return "win";
+      if (score.player2 > score.player1) return "lose";
       return "draw";
     }).sample(endOfGame_).merge(reset_.map(function () {
       return "";
