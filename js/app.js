@@ -1,10 +1,9 @@
-define(["exports", "rx", "react", "./components/Buttons", "./components/ThrowButton", "./components/Shape", "./components/Score", "./components/Announcement", "./utils"], function (exports, _rx, _react, _componentsButtons, _componentsThrowButton, _componentsShape, _componentsScore, _componentsAnnouncement, _utils) {
+define(["exports", "rx", "react", "./components/Buttons", "./components/Shape", "./components/Score", "./components/Announcement", "./utils"], function (exports, _rx, _react, _componentsButtons, _componentsShape, _componentsScore, _componentsAnnouncement, _utils) {
   "use strict";
 
   var Rx = _rx;
   var React = _react;
   var Buttons = _componentsButtons["default"];
-  var ThrowButton = _componentsThrowButton["default"];
   var Shape = _componentsShape["default"];
   var Score = _componentsScore["default"];
   var Announcement = _componentsAnnouncement["default"];
@@ -135,7 +134,7 @@ define(["exports", "rx", "react", "./components/Buttons", "./components/ThrowBut
     */
     state_.subscribe(function (state) {
       var buttonsVisible = !state.shapesVisible && state.result === "";
-
+      var shapesClass = state.result !== "" ? "shapes fade" : "shapes";
       React.render(React.createElement("div", null, React.createElement("div", {
         className: "counter"
       }, state.counter, "/", rounds), React.createElement(Announcement, {
@@ -150,7 +149,9 @@ define(["exports", "rx", "react", "./components/Buttons", "./components/ThrowBut
         events_: buttonEvents_,
         visible: buttonsVisible,
         shapes: config.shapes
-      }), React.createElement(Shape, {
+      }), React.createElement("div", {
+        className: shapesClass
+      }, React.createElement(Shape, {
         shape: state.player1Shape,
         isWinner: state.winner === "player1",
         isLoser: state.winner === "player2",
@@ -164,7 +165,7 @@ define(["exports", "rx", "react", "./components/Buttons", "./components/ThrowBut
         isDraw: state.winner === null,
         visible: state.shapesVisible,
         "class": "player2"
-      })), container);
+      }))), container);
     });
   }
   exports["default"] = app;
